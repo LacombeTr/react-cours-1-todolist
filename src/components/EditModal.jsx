@@ -1,11 +1,4 @@
-import {
-    Modal,
-    View,
-    Text,
-    TextInput,
-    Pressable,
-    StyleSheet,
-} from "react-native";
+import "./EditModal.css";
 
 export const EditModal = ({
     modalVisible,
@@ -24,102 +17,45 @@ export const EditModal = ({
     };
 
     const handleEdit = () => {
-        goals[activeObjective] = editedObjective;
-        setGoals([...goals]);
+        const updatedGoals = [...goals];
+        updatedGoals[activeObjective] = editedObjective;
+        setGoals(updatedGoals);
         setEditedObjective("");
         setModalVisible(false);
     };
 
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            setModalVisible(false);
+        }
+    };
+
+    if (!modalVisible) return null;
+
     return (
-        <Modal
-            animationType='slide'
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(!modalVisible);
-            }}
-        >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Éditer l'objectif</Text>
+        <div className='modal-overlay' onClick={handleOverlayClick}>
+            <div className='modal-container'>
+                <h2 className='modal-title'>Éditer l'objectif</h2>
 
-                    <TextInput
-                        style={styles.input}
-                        value={editedObjective}
-                        initialValue={editedObjective}
-                        onChangeText={setEditedObjective}
-                    ></TextInput>
+                <input
+                    type='text'
+                    className='modal-input'
+                    value={editedObjective}
+                    onChange={(e) => setEditedObjective(e.target.value)}
+                    placeholder="Modifier l'objectif"
+                    autoFocus
+                />
 
-                    <View
-                        style={{ flexDirection: "row", gap: 10, marginTop: 15 }}
-                    >
-                        <Pressable style={[styles.button]} onPress={handleEdit}>
-                            <Text style={styles.textStyle}>Valider</Text>
-                        </Pressable>
+                <div className='modal-buttons'>
+                    <button className='modal-button' onClick={handleEdit}>
+                        Valider
+                    </button>
 
-                        <Pressable
-                            style={[styles.button]}
-                            onPress={handleCancelEdit}
-                        >
-                            <Text style={styles.textStyle}>Fermer</Text>
-                        </Pressable>
-                    </View>
-                </View>
-            </View>
-        </Modal>
+                    <button className='modal-button' onClick={handleCancelEdit}>
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#00000099",
-    },
-    modalView: {
-        width: "80%",
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        backgroundColor: "rgba(194, 71, 46, 1)",
-        paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: 4,
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center",
-    },
-    modalText: {
-        width: "100%",
-        marginBottom: 15,
-        textAlign: "center",
-        color: "rgba(194, 71, 46, 1)",
-        fontWeight: "bold",
-        fontSize: 18,
-        textTransform: "uppercase",
-    },
-
-    input: {
-        width: "80%",
-        borderColor: "gray",
-        borderRadius: 2,
-        borderWidth: 1,
-        paddingHorizontal: 10,
-        paddingVertical: 2,
-    },
-});
