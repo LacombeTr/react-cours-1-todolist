@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, Text } from "react-native";
+import "./DisplayZone.css";
 import { Objective } from "./Objective";
 
 export const DisplayZone = ({
@@ -7,54 +7,50 @@ export const DisplayZone = ({
     handleRemoveGoal,
     openEditModal,
 }) => {
+    const activeGoals = goals.filter((goal) => !goal.done);
+    const completedGoals = goals.filter((goal) => goal.done);
+
     return (
-        <>
-            <Text style={styles.subtitle}>Objectifs en cours:</Text>
-            <FlatList
-                style={styles.list}
-                data={goals.filter(goal => !goal.done)}
-                renderItem={({ item, index }) => (
-                    <Objective
-                        objective={item}
-                        setGoals={setGoals}
-                        goals={goals.filter(goal => !goal.done)}
-                        handleRemoveGoal={() => handleRemoveGoal(index)}
-                        openEditModal={() => openEditModal(index)}
-                        index={index}
-                    />
-                )}
-                keyExtractor={(_, index) => index.toString()}
-            />
-            <Text style={styles.subtitle}>Objectifs réalisés:</Text>
-            <FlatList
-                style={styles.list}
-                data={goals.filter(goal => goal.done)}
-                renderItem={({ item, index }) => (
-                    <Objective
-                        objective={item}
-                        setGoals={setGoals}
-                        goals={goals.filter(goal => goal.done)}
-                        handleRemoveGoal={() => handleRemoveGoal(index)}
-                        openEditModal={() => openEditModal(index)}
-                        index={index}
-                    />
-                )}
-                keyExtractor={(_, index) => index.toString()}
-            />
-        </>
+        <div className='display-zone'>
+            <h3 className='display-zone__subtitle'>Objectifs en cours:</h3>
+            <div className='display-zone__list'>
+                {activeGoals.map((item, index) => {
+                    const originalIndex = goals.indexOf(item);
+                    return (
+                        <Objective
+                            key={originalIndex}
+                            objective={item}
+                            setGoals={setGoals}
+                            goals={activeGoals}
+                            handleRemoveGoal={() =>
+                                handleRemoveGoal(originalIndex)
+                            }
+                            openEditModal={() => openEditModal(originalIndex)}
+                            index={index}
+                        />
+                    );
+                })}
+            </div>
+
+            <h3 className='display-zone__subtitle'>Objectifs réalisés:</h3>
+            <div className='display-zone__list'>
+                {completedGoals.map((item, index) => {
+                    const originalIndex = goals.indexOf(item);
+                    return (
+                        <Objective
+                            key={originalIndex}
+                            objective={item}
+                            setGoals={setGoals}
+                            goals={completedGoals}
+                            handleRemoveGoal={() =>
+                                handleRemoveGoal(originalIndex)
+                            }
+                            openEditModal={() => openEditModal(originalIndex)}
+                            index={index}
+                        />
+                    );
+                })}
+            </div>
+        </div>
     );
 };
-
-const styles = StyleSheet.create({
-    list: {
-        marginTop: 20,
-        width: "80%",
-        gap: 5,
-    },
-
-    subtitle: {
-        fontWeight: "bold",
-        marginTop: 15,
-        color: "rgba(194, 71, 46, 1)",
-    }
-});
