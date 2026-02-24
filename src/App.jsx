@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [newObjective, setNewObjective] = useState(null);
+    const [activeObjective, setActiveObjective] = useState(null);
+    const [editedObjective, setEditedObjective] = useState(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [goals, setGoals] = useState([]);
+
+    const handleChange = (text) => {
+        setNewObjective({ objective: text, done: false });
+    };
+
+    const handleAddGoal = () => {
+        if (newObjective.objective.trim()) {
+            setGoals([...goals, newObjective]);
+            setNewObjective("");
+        }
+    };
+
+    const handleRemoveGoal = (index) => {
+        const updatedGoals = goals.filter((_, i) => i !== index);
+        setGoals(updatedGoals);
+    };
+
+    const handleEditGoal = (index) => {
+        setActiveObjective(index);
+        setEditedObjective(goals[index]);
+        setModalVisible(true);
+    };
+
+    return (
+        <div className="container">
+            <div className="background" />
+            <h1 className="title">Mes buts 2026</h1>
+            <p className="subtitle">Ajouter un nouvel objectif:</p>
+
+            <CreateZone
+                newObjective={newObjective}
+                handleChange={handleChange}
+                handleAddGoal={handleAddGoal}
+            />
+
+            <DisplayZone
+                goals={goals}
+                setGoals={setGoals}
+                handleRemoveGoal={handleRemoveGoal}
+                openEditModal={handleEditGoal}
+            />
+
+            <EditModal
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+                goals={goals}
+                setGoals={setGoals}
+                activeObjective={activeObjective}
+                setActiveObjective={setActiveObjective}
+                editedObjective={editedObjective}
+                setEditedObjective={setEditedObjective}
+            />
+            <StatusBar style='auto' />
+        </div>
+    );
 }
 
-export default App
+export default App;
