@@ -1,0 +1,40 @@
+.create-zone {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.create-zone__input {
+    height: 40px;
+    width: 50%;
+    border: 1px solid gray;
+    border-radius: 2px;
+    padding: 2px 10px;
+    font-size: 14px;
+}
+
+.create-zone__input::placeholder {
+    color: #999;
+}
+
+.create-zone__button {
+    background-color: rgba(194, 71, 46, 1);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.create-zone__button:hover {
+    background-color: rgba(174, 61, 36, 1);
+}
+
+.create-zone__button:active {
+    transform: translateY(1px);
+}
