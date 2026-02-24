@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./EditModal.css";
 
 export const EditModal = ({
@@ -10,8 +11,15 @@ export const EditModal = ({
     editedObjective,
     setEditedObjective,
 }) => {
+    const [, setValue] = useState("");
+
+    const handleInputChange = (e) => {
+        setValue(e.target.value);
+        setEditedObjective({ ...editedObjective, objective: e.target.value });
+    };
+
     const handleCancelEdit = () => {
-        setEditedObjective("");
+        setEditedObjective(null);
         setActiveObjective(null);
         setModalVisible(false);
     };
@@ -20,7 +28,7 @@ export const EditModal = ({
         const updatedGoals = [...goals];
         updatedGoals[activeObjective] = editedObjective;
         setGoals(updatedGoals);
-        setEditedObjective("");
+        setEditedObjective(null);
         setModalVisible(false);
     };
 
@@ -40,8 +48,8 @@ export const EditModal = ({
                 <input
                     type='text'
                     className='modal-input'
-                    value={editedObjective}
-                    onChange={(e) => setEditedObjective(e.target.value)}
+                    value={editedObjective?.text || ""}
+                    onInput={handleInputChange}
                     placeholder="Modifier l'objectif"
                     autoFocus
                 />

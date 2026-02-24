@@ -3,7 +3,6 @@ import "./Objective.css";
 
 export const Objective = ({
     objective,
-    goals,
     setGoals,
     openEditModal,
     handleRemoveGoal,
@@ -12,11 +11,13 @@ export const Objective = ({
     const [isChecked, setChecked] = useState(objective.done);
 
     useEffect(() => {
-        const updatedGoals = [...goals];
-        updatedGoals[index] = { ...objective, done: isChecked };
-        setGoals(updatedGoals);
-    }, [isChecked, goals, index, objective, setGoals]);
-
+        setGoals((prevGoals) => {
+            const updatedGoals = [...prevGoals];
+            updatedGoals[index] = { ...objective, done: isChecked };
+            return updatedGoals;
+        });
+    }, [isChecked, index, setGoals]);
+    
     return (
         <div className='objective-item' onClick={() => openEditModal(index)}>
             <input

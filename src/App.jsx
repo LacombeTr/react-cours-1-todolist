@@ -1,39 +1,27 @@
-import { useState } from "react";
 import { CreateZone } from "./components/CreateZone";
 import { DisplayZone } from "./components/DisplayZone";
 import { EditModal } from "./components/EditModal";
+import { useObjective } from "./context/ObjectiveContext";
 import "./App.css";
 
 function App() {
-    const [newObjective, setNewObjective] = useState(null);
-    const [activeObjective, setActiveObjective] = useState(null);
-    const [editedObjective, setEditedObjective] = useState(null);
+    const {
+        goals,
+        newObjective,
+        activeObjective,
+        editedObjective,
+        modalVisible,
 
-    const [modalVisible, setModalVisible] = useState(false);
+        handleChange,
+        handleAddGoal,
+        handleRemoveGoal,
+        handleEditGoal,
 
-    const [goals, setGoals] = useState([]);
-
-    const handleChange = (text) => {
-        setNewObjective({ objective: text, done: false });
-    };
-
-    const handleAddGoal = () => {
-        if (newObjective.objective.trim()) {
-            setGoals([...goals, newObjective]);
-            setNewObjective("");
-        }
-    };
-
-    const handleRemoveGoal = (index) => {
-        const updatedGoals = goals.filter((_, i) => i !== index);
-        setGoals(updatedGoals);
-    };
-
-    const handleEditGoal = (index) => {
-        setActiveObjective(index);
-        setEditedObjective(goals[index]);
-        setModalVisible(true);
-    };
+        setGoals,
+        setModalVisible,
+        setEditedObjective,
+        setActiveObjective,
+    } = useObjective();
 
     return (
         <div className='container'>

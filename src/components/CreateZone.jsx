@@ -18,7 +18,13 @@ export const CreateZone = ({ handleChange, handleAddGoal }) => {
                 onChange={handleInputChange}
                 placeholder='Entrez un nouvel objectif'
             />
-            <button className='create-zone__button' onClick={handleAddGoal}>
+            <button
+                className='create-zone__button'
+                onClick={() => {
+                    handleAddGoal(value);
+                    setValue("");
+                }}
+            >
                 Ajouter
             </button>
         </div>

@@ -9,6 +9,5 @@ createRoot(document.getElementById("root")).render(
         <ObjectiveProvider>
             <App />
         </ObjectiveProvider>
-        <App />
     </StrictMode>,
 );

@@ -1,5 +1,6 @@
-import "./DisplayZone.css";
+
 import { Objective } from "./Objective";
+import "./DisplayZone.css";
 
 export const DisplayZone = ({
     goals,
@@ -7,21 +8,21 @@ export const DisplayZone = ({
     handleRemoveGoal,
     openEditModal,
 }) => {
-    const activeGoals = goals.filter((goal) => !goal.done);
-    const completedGoals = goals.filter((goal) => goal.done);
+    const updatedActiveGoals = [...goals].filter((goal) => !goal.done);
+    const updatedCompletedGoals = [...goals].filter((goal) => goal.done);
 
     return (
         <div className='display-zone'>
             <h3 className='display-zone__subtitle'>Objectifs en cours:</h3>
             <div className='display-zone__list'>
-                {activeGoals.map((item, index) => {
+                {updatedActiveGoals.map((item, index) => {
                     const originalIndex = goals.indexOf(item);
                     return (
                         <Objective
                             key={originalIndex}
                             objective={item}
                             setGoals={setGoals}
-                            goals={activeGoals}
+                            goals={updatedActiveGoals}
                             handleRemoveGoal={() =>
                                 handleRemoveGoal(originalIndex)
                             }
@@ -34,14 +35,14 @@ export const DisplayZone = ({
 
             <h3 className='display-zone__subtitle'>Objectifs réalisés:</h3>
             <div className='display-zone__list'>
-                {completedGoals.map((item, index) => {
+                {updatedCompletedGoals.map((item, index) => {
                     const originalIndex = goals.indexOf(item);
                     return (
                         <Objective
                             key={originalIndex}
                             objective={item}
                             setGoals={setGoals}
-                            goals={completedGoals}
+                            goals={updatedCompletedGoals}
                             handleRemoveGoal={() =>
                                 handleRemoveGoal(originalIndex)
                             }
