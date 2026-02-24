@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { CreateZone } from "./components/CreateZone";
+import { DisplayZone } from "./components/DisplayZone";
+import { EditModal } from "./components/EditModal";
 import "./App.css";
 
 function App() {
@@ -33,10 +36,10 @@ function App() {
     };
 
     return (
-        <div className="container">
-            <div className="background" />
-            <h1 className="title">Mes buts 2026</h1>
-            <p className="subtitle">Ajouter un nouvel objectif:</p>
+        <div className='container'>
+            <div className='background' />
+            <h1 className='title'>Mes buts 2026</h1>
+            <p className='subtitle'>Ajouter un nouvel objectif:</p>
 
             <CreateZone
                 newObjective={newObjective}
@@ -61,7 +64,6 @@ function App() {
                 editedObjective={editedObjective}
                 setEditedObjective={setEditedObjective}
             />
-            <StatusBar style='auto' />
         </div>
     );
 }
