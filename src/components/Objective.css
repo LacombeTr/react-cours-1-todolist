@@ -1,0 +1,57 @@
+.objective-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(194, 71, 46, 1);
+    padding: 2px 10px;
+    border-radius: 100px;
+    margin: 3px 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.objective-item:hover {
+    background-color: rgba(174, 61, 36, 1);
+}
+
+.objective-checkbox {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: rgba(194, 71, 46, 1);
+    cursor: pointer;
+}
+
+.objective-checkbox:checked {
+    background-color: rgba(194, 71, 46, 1);
+    border-color: rgba(194, 71, 46, 1);
+}
+
+.objective-text {
+    color: white;
+    font-size: 12px;
+    flex: 1;
+    user-select: none;
+}
+
+.objective-delete {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.objective-delete:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.objective-delete:active {
+    transform: scale(0.95);
+}
